@@ -1,0 +1,27 @@
+import csv
+
+samples = [
+    ("@Test public void testAddition() { int result = 2 + 2; assertEquals(4, result); }", "not_flaky"),
+    ("@Test public void testStringConcat() { String s = \"hello\" + \"world\"; assertEquals(\"helloworld\", s); }", "not_flaky"),
+    ("@Test public void testListSize() { List<Integer> list = new ArrayList<>(); list.add(1); assertEquals(1, list.size()); }", "not_flaky"),
+    ("@Test public void testSubtraction() { assertEquals(3, 5 - 2); }", "not_flaky"),
+    ("@Test public void testBooleanLogic() { assertTrue(true && !false); }", "not_flaky"),
+    ("@Test public void testStaticMath() { assertEquals(9, Math.pow(3, 2), 0.001); }", "not_flaky"),
+    ("@Test public void testSort() { int[] arr = {3, 1, 2}; Arrays.sort(arr); assertArrayEquals(new int[]{1,2,3}, arr); }", "not_flaky"),
+    ("@Test public void testSimpleMap() { Map<String,Integer> m = new TreeMap<>(); m.put(\"a\", 1); assertEquals(1, (int) m.get(\"a\")); }", "not_flaky"),
+    ("@Test public void testSleepyNetworkCall() throws Exception { Thread.sleep(1000); HttpClient client = new HttpClient(); String r = client.get(\"http://example.com/api\"); assertNotNull(r); }", "flaky"),
+    ("@Test public void testRandomValue() { Random r = new Random(); int x = r.nextInt(100); assertTrue(x < 1000); }", "flaky"),
+    ("@Test public void testSharedStaticCounter() { static int counter; counter++; assertEquals(1, counter); }", "flaky"),
+    ("@Test public void testHashSetOrder() { HashSet<String> set = new HashSet<>(); set.add(\"a\"); set.add(\"b\"); assertEquals(\"a\", set.iterator().next()); }", "flaky"),
+    ("@Test public void testAsyncThread() throws InterruptedException { Thread t = new Thread(() -> {}); t.start(); t.join(10); assertTrue(t.isAlive() == false); }", "flaky"),
+    ("@Test public void testTimeoutDependent() { long start = System.currentTimeMillis(); doWork(); assertTrue(System.currentTimeMillis() - start < 100); }", "flaky"),
+    ("@Test public void testFileReadRace() throws Exception { FileReader fr = new FileReader(\"shared.txt\"); assertNotNull(fr); }", "flaky"),
+    ("@Test public void testExecutorFuture() throws Exception { ExecutorService ex = Executors.newSingleThreadExecutor(); Future<Integer> f = ex.submit(() -> 42); assertEquals(42, (int) f.get()); }", "flaky"),
+]
+
+with open("data/sample_tests.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerow(["test_code", "label"])
+    writer.writerows(samples)
+
+print("Wrote data/sample_tests.csv with", len(samples), "rows")
