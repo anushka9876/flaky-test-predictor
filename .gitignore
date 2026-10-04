@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# OS
+.DS_Store
+
+# Project-specific
+data/raw/
+models/*.joblib
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
