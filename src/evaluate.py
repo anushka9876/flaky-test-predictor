@@ -57,8 +57,8 @@ def main():
         print("\n=== Explanation alignment check ===")
         print(
             f"{match_count}/{total_checked} "
-            f"({100 * match_count / total_checked:.1f}%) of explanations named "
-            "the same category as the documented real cause."
+            f"({100 * match_count / total_checked:.1f}%) of explanations "
+            f"named the same category as the documented real cause."
         )
 
 
